@@ -2,6 +2,7 @@ import tkinter
 window  = tkinter.Tk()
 window.title("CASS calculator")
 
+#coordinates of basis
 x = 390
 y = 280
 
@@ -43,6 +44,7 @@ mini_numbers = {"0":tkinter.PhotoImage(file = r"images/m0.gif"),
 memory = {"first_slot":"","second_slot":"",
         "third_slot":"", "total":"","result":""}
 
+#check if operation button was used
 def button_of_number(num):
     if memory["second_slot"] == "":
         memory["first_slot"]+= num
@@ -51,10 +53,12 @@ def button_of_number(num):
         memory["third_slot"]+= num
         screen(memory["third_slot"],photo = numbers[num])
 
+#if pressed number after equal
 def check_button_opt():
     if memory["result"] != "" and memory["first_slot"] == "":
         memory["first_slot"] = memory["result"]
 
+#for operation buttons
 def operation(opt):
     empty_screen()
     if memory["second_slot"] == "" and memory["third_slot"] == "":
@@ -64,11 +68,12 @@ def operation(opt):
     elif memory["third_slot"] != "":
         first_zero()
 
+#Show zero on a screen after start
 def first_zero():    
     memory["first_slot"],memory["second_slot"],memory["third_slot"],memory["total"] = "","","",""
     empty_screen()
     mini_empty()
-    canvas.create_image(120,y, image=numbers["0"]) #zero on a screen
+    canvas.create_image(120,y, image=numbers["0"])
 
 def equal():
     memory["total"] = memory["first_slot"] + memory["second_slot"] + memory["third_slot"]
@@ -94,7 +99,7 @@ def equal():
     mini_empty()
     memory["result"] = str(eval(memory["total"])) 
     photo = ""
-    #first_zero()
+    #first_zero() #uncomment if you have user bug
     screen(memory["result"],photo)  
     mini() 
 
@@ -103,8 +108,6 @@ def mini():
     if memory["second_slot"] == "+" or memory["second_slot"] == "-" or memory["second_slot"] == "*" or memory["second_slot"] == "/":
         x = 125
         znak = memory["first_slot"]+memory["second_slot"]+memory["third_slot"]
-        print(znak)
-        print(memory)
         for i in znak[:19]:
             canvas.create_image(x,198, image=mini_numbers[str(i)])
             x+=15  
@@ -133,9 +136,7 @@ def mini_empty():
     canvas.create_image(252,198, image=mini_numbers["mini_empty"])     
 
 def left_click(event):
-
-    print(str(event.x) + "," + str(event.y))
-        
+       
     if event.x > 45 and event.x < 124 and event.y > 706 and event.y < 760:
         button_of_number(num = "1")        
     if event.x > 155 and event.x < 236 and event.y > 706 and event.y < 760:
