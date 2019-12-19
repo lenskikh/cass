@@ -9,40 +9,23 @@ window.title("CASS calculator")
 x = 390
 y = 280
 
-numbers = {"0":tkinter.PhotoImage(file = r"images/10.gif"),
-           "1":tkinter.PhotoImage(file = r"images/1.gif"),
-           "2":tkinter.PhotoImage(file = r"images/2.gif"),
-           "3":tkinter.PhotoImage(file = r"images/3.gif"),
-           "4":tkinter.PhotoImage(file = r"images/4.gif"),
-           "5":tkinter.PhotoImage(file = r"images/5.gif"),
-           "6":tkinter.PhotoImage(file = r"images/6.gif"),
-           "7":tkinter.PhotoImage(file = r"images/7.gif"),
-           "8":tkinter.PhotoImage(file = r"images/8.gif"),
-           "9":tkinter.PhotoImage(file = r"images/9.gif"),
-           "10":tkinter.PhotoImage(file = r"images/empty.gif"),
-           ".":tkinter.PhotoImage(file = r"images/dot.gif"),
+numbers = {".":tkinter.PhotoImage(file = r"images/dot.gif"),
            "-":tkinter.PhotoImage(file = r"images/minus.gif"),
            "gallons":tkinter.PhotoImage(file = r"images/gallons.gif"),
            "miles":tkinter.PhotoImage(file = r"images/miles.gif"),
            "celsius":tkinter.PhotoImage(file = r"images/celsius.gif"),
            "pounds":tkinter.PhotoImage(file = r"images/pounds.gif")}
 
-mini_numbers = {"0":tkinter.PhotoImage(file = r"images/m0.gif"),
-           "1":tkinter.PhotoImage(file = r"images/m1.gif"),
-           "2":tkinter.PhotoImage(file = r"images/m2.gif"),
-           "3":tkinter.PhotoImage(file = r"images/m3.gif"),
-           "4":tkinter.PhotoImage(file = r"images/m4.gif"),
-           "5":tkinter.PhotoImage(file = r"images/m5.gif"),
-           "6":tkinter.PhotoImage(file = r"images/m6.gif"),
-           "7":tkinter.PhotoImage(file = r"images/m7.gif"),
-           "8":tkinter.PhotoImage(file = r"images/m8.gif"),
-           "9":tkinter.PhotoImage(file = r"images/m9.gif"),
-           "mini_empty":tkinter.PhotoImage(file = r"images/mini_empty.gif"),
-           "+":tkinter.PhotoImage(file = r"images/mini_plus.gif"),
+mini_numbers = {"+":tkinter.PhotoImage(file = r"images/mini_plus.gif"),
            "-":tkinter.PhotoImage(file = r"images/mini_minus.gif"),
            "*":tkinter.PhotoImage(file = r"images/mini_x.gif"),
            "/":tkinter.PhotoImage(file = r"images/mini_divide.gif"),
            ".":tkinter.PhotoImage(file = r"images/mini_dot.gif")}
+
+#digits from 0 to 9 and empty screen as 10
+for counter in range(11):
+    numbers[str(counter)] = tkinter.PhotoImage(file = r"images/"+str(counter)+".gif")
+    mini_numbers[str(counter)] = tkinter.PhotoImage(file = r"images/m"+str(counter)+".gif")
 
 memory = {"first_slot":"","second_slot":"",
         "third_slot":"", "total":"","result":""}
@@ -133,7 +116,7 @@ def empty_screen():
     canvas.create_image(252,280, image=numbers["10"])  
 
 def mini_empty():
-    canvas.create_image(252,198, image=mini_numbers["mini_empty"])     
+    canvas.create_image(252,198, image=mini_numbers["10"])     
 
 def left_click(event):
         
