@@ -1,31 +1,34 @@
-import tkinter
-import winsound
+import tkinter as tk
 
-sound_of_click = 'sounds/click.wav'
+#Sound activation results in a slower response to key presses
+#If you want to hear keystroke clicks, remove the comments on three lines
 
-window  = tkinter.Tk()
+#import winsound
+#sound_of_click = 'sounds/click.wav'
+
+window  = tk.Tk()
 window.title("CASS calculator")
 
 x = 390
 y = 280
 
-numbers = {".":tkinter.PhotoImage(file = r"images/dot.gif"),
-           "-":tkinter.PhotoImage(file = r"images/minus.gif"),
-           "gallons":tkinter.PhotoImage(file = r"images/gallons.gif"),
-           "miles":tkinter.PhotoImage(file = r"images/miles.gif"),
-           "celsius":tkinter.PhotoImage(file = r"images/celsius.gif"),
-           "pounds":tkinter.PhotoImage(file = r"images/pounds.gif")}
+numbers = {".":tk.PhotoImage(file = r"images/dot.gif"),
+           "-":tk.PhotoImage(file = r"images/minus.gif"),
+           "gallons":tk.PhotoImage(file = r"images/gallons.gif"),
+           "miles":tk.PhotoImage(file = r"images/miles.gif"),
+           "celsius":tk.PhotoImage(file = r"images/celsius.gif"),
+           "pounds":tk.PhotoImage(file = r"images/pounds.gif")}
 
-mini_numbers = {"+":tkinter.PhotoImage(file = r"images/mini_plus.gif"),
-           "-":tkinter.PhotoImage(file = r"images/mini_minus.gif"),
-           "*":tkinter.PhotoImage(file = r"images/mini_x.gif"),
-           "/":tkinter.PhotoImage(file = r"images/mini_divide.gif"),
-           ".":tkinter.PhotoImage(file = r"images/mini_dot.gif")}
+mini_numbers = {"+":tk.PhotoImage(file = r"images/mini_plus.gif"),
+           "-":tk.PhotoImage(file = r"images/mini_minus.gif"),
+           "*":tk.PhotoImage(file = r"images/mini_x.gif"),
+           "/":tk.PhotoImage(file = r"images/mini_divide.gif"),
+           ".":tk.PhotoImage(file = r"images/mini_dot.gif")}
 
 #digits from 0 to 9 and empty screen as 10
 for counter in range(11):
-    numbers[str(counter)] = tkinter.PhotoImage(file = r"images/"+str(counter)+".gif")
-    mini_numbers[str(counter)] = tkinter.PhotoImage(file = r"images/m"+str(counter)+".gif")
+    numbers[str(counter)] = tk.PhotoImage(file = r"images/"+str(counter)+".gif")
+    mini_numbers[str(counter)] = tk.PhotoImage(file = r"images/m"+str(counter)+".gif")
 
 memory = {"first_slot":"","second_slot":"",
         "third_slot":"", "total":"","result":""}
@@ -60,23 +63,24 @@ def first_zero():
 
 def equal():
     memory["total"] = memory["first_slot"] + memory["second_slot"] + memory["third_slot"]
-    if memory["second_slot"] == "%":
-        memory["total"] = memory["first_slot"]+"/100"+"*"+memory["third_slot"]
-    elif memory["second_slot"] == "Volume":
-        memory["total"] = memory["first_slot"]+"/"+"3.785411784"      
-    elif memory["second_slot"] == "Temperature":
-        memory["total"] = memory["first_slot"]+"*1.8"+"+32"    
-    elif memory["second_slot"] == "Pounds":
-        memory["total"] = memory["first_slot"]+"*2.2046" 
-    elif memory["second_slot"] == "Length":
-        memory["total"] = memory["first_slot"]+"*0.62137" 
-    elif memory["second_slot"] == "Root":
-        counter = 1
-        root = 0
-        while root <= int(memory["first_slot"]):
-            counter+= 0.1
-            root = counter * counter
-        memory["total"] = str(counter) 
+    match memory["second_slot"]:
+        case "%":
+            memory["total"] = memory["first_slot"]+"/100"+"*"+memory["third_slot"]
+        case "Volume":
+            memory["total"] = memory["first_slot"]+"/"+"3.785411784"      
+        case "Temperature":
+            memory["total"] = memory["first_slot"]+"*1.8"+"+32"    
+        case "Pounds":
+            memory["total"] = memory["first_slot"]+"*2.2046" 
+        case "Length":
+            memory["total"] = memory["first_slot"]+"*0.62137" 
+        case "Root":
+            counter = 1
+            root = 0
+            while root <= int(memory["first_slot"]):
+                counter+= 0.1
+                root = counter * counter
+            memory["total"] = str(counter) 
 
     empty_screen()
     mini_empty()
@@ -228,12 +232,12 @@ def left_click(event):
     if event.x > 54 and event.x < 118 and event.y > 471 and event.y < 524:
         first_zero()
 
-    winsound.PlaySound(sound_of_click, winsound.SND_FILENAME)
+    #winsound.PlaySound(sound_of_click, winsound.SND_FILENAME)
     
-canvas = tkinter.Canvas(window , height=900, width=502)
+canvas = tk.Canvas(window , height=900, width=502)
 canvas.grid(row = 0, column = 0)
 
-calculator_background = tkinter.PhotoImage(file = 'images/bg.gif')
+calculator_background = tk.PhotoImage(file = 'images/bg.gif')
 canvas.create_image(253,450, image=calculator_background)
 first_zero()
 
